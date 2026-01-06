@@ -1,0 +1,250 @@
+<div class="admin-dashboard">
+  <!-- Back to Home button is now inline with the header title -->
+
+  <div *ngIf="!isAdmin()" class="unauthorized-alert">
+    <i class="fas fa-lock"></i> You are not authorized to view this page.
+  </div>
+
+  <div *ngIf="isAdmin()" class="admin-container">
+    <!-- Tab Selector Header -->
+    <div class="admin-header">
+      <div class="header-top">
+        <h1 class="admin-title">Admin Dashboard</h1>
+        <a routerLink="/home" class="btn back-btn header-back" title="Back to Home">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </div>
+      <div class="tab-buttons">
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'create-article'"
+          (click)="switchTab('create-article')">
+          <i class="fas fa-plus-circle"></i> Create
+        </button>
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'edit-article'"
+          (click)="switchTab('edit-article')">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'approve-article'"
+          (click)="switchTab('approve-article')">
+          <i class="fas fa-check-circle"></i> Approve
+        </button>
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'active-comment'"
+          (click)="switchTab('active-comment')">
+          <i class="fas fa-comments"></i> Comments
+        </button>
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'create-admin'"
+          (click)="switchTab('create-admin')">
+          <i class="fas fa-user-plus"></i> Admin
+        </button>
+      </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div *ngIf="success" class="alert alert-success">
+      <i class="fas fa-check"></i> {{ success }}
+    </div>
+    <div *ngIf="error" class="alert alert-danger">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+
+
+
+    <!-- Create Article Tab -->
+    <div *ngIf="activeTab === 'create-article'" class="tab-content">
+      <div class="section-header">
+        <h2><i class="fas fa-plus-circle"></i> Create New Article</h2>
+        <p class="section-description">Create and publish new articles to your blog</p>
+      </div>
+      <div class="form-section">
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle"></i> Article creation feature is under development. Coming soon!
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Article Tab -->
+    <div *ngIf="activeTab === 'edit-article'" class="tab-content">
+      <div class="section-header">
+        <h2><i class="fas fa-edit"></i> Edit Existing Articles</h2>
+        <p class="section-description">Update and modify published articles</p>
+      </div>
+      <div class="form-section">
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle"></i> Article editing feature is under development. Coming soon!
+        </div>
+      </div>
+    </div>
+
+    <!-- Approve Article Tab -->
+    <div *ngIf="activeTab === 'approve-article'" class="tab-content">
+      <div class="section-header">
+        <h2><i class="fas fa-check-circle"></i> Approve Articles</h2>
+        <p class="section-description">Review and publish draft articles</p>
+      </div>
+      <div class="content-section">
+        <div *ngIf="isLoading" class="loading-spinner">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">Loading draft articles...</p>
+        </div>
+        <div *ngIf="!isLoading && drafts.length === 0" class="alert alert-info">
+          <i class="fas fa-inbox"></i> No draft articles to approve.
+        </div>
+        <div *ngIf="!isLoading && drafts.length > 0" class="article-grid">
+          <div *ngFor="let draft of drafts" class="article-card">
+            <div class="article-image" *ngIf="draft.featured_image">
+              <img [src]="draft.featured_image" [alt]="draft.title">
+            </div>
+            <div class="article-content">
+              <h3 class="article-title">{{ draft.title }}</h3>
+              <p class="article-summary">{{ draft.summary }}</p>
+              <p class="article-meta">
+                <small>
+                  <i class="far fa-calendar"></i>
+                  {{ formatDateTime(draft.created_at) }}
+                </small>
+              </p>
+              <div class="article-actions">
+                <button class="btn btn-success" (click)="approveDraft(draft.id)">
+                  <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn btn-outline-secondary">
+                  <i class="fas fa-eye"></i> View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Comments Tab -->
+    <div *ngIf="activeTab === 'active-comment'" class="tab-content">
+      <div class="section-header">
+        <h2><i class="fas fa-comments"></i> Pending Comments</h2>
+        <p class="section-description">Approve or archive comments awaiting moderation</p>
+      </div>
+      <div class="content-section">
+        <div *ngIf="isLoading" class="loading-spinner">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">Loading pending comments...</p>
+        </div>
+        <div *ngIf="!isLoading && comments.length === 0" class="alert alert-info">
+          <i class="fas fa-inbox"></i> No comments pending approval.
+        </div>
+        <div *ngIf="!isLoading && comments.length > 0" class="comments-list">
+          <div *ngFor="let comment of comments" class="comment-card">
+            <div class="comment-header">
+              <h4 class="comment-title">{{ comment.title || 'Comment' }}</h4>
+              <span class="comment-badge">Pending</span>
+            </div>
+            <p class="comment-text">{{ comment.content }}</p>
+            <div class="comment-meta">
+              <small>
+                <i class="far fa-user"></i> <strong>{{ comment.user_name }}</strong>
+              </small>
+              <small class="ms-2">
+                <i class="far fa-envelope"></i> {{ comment.user_email }}
+              </small>
+              <small class="ms-2">
+                <i class="far fa-calendar"></i> {{ formatDateTime(comment.created_at) }}
+              </small>
+            </div>
+            <div class="comment-actions">
+              <button class="btn btn-success" (click)="activateComment(comment.comment_id)">
+                <i class="fas fa-check"></i> Approve
+              </button>
+              <button class="btn btn-danger" (click)="confirmArchiveComment(comment.comment_id)">
+                <i class="fas fa-trash"></i> Archive
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Admin Tab -->
+    <div *ngIf="activeTab === 'create-admin'" class="tab-content">
+      <div class="section-header">
+        <h2><i class="fas fa-user-plus"></i> Create Admin User</h2>
+        <p class="section-description">Add a new administrator account</p>
+      </div>
+      <div class="form-section">
+        <form (ngSubmit)="submitCreateAdmin()" class="admin-form">
+          <div class="form-group">
+            <label for="adminName" class="form-label">Admin Name <span class="required">*</span></label>
+            <input 
+              id="adminName"
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="adminForm.name"
+              name="name"
+              placeholder="Enter full name"
+              required>
+            <small class="form-text">The display name for this admin account</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminEmail" class="form-label">Email Address <span class="required">*</span></label>
+            <input 
+              id="adminEmail"
+              type="email" 
+              class="form-control" 
+              [(ngModel)]="adminForm.email"
+              name="email"
+              placeholder="name@example.com"
+              required>
+            <small class="form-text">Unique email address for login</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPassword" class="form-label">Password <span class="required">*</span></label>
+            <input 
+              id="adminPassword"
+              type="password" 
+              class="form-control" 
+              [(ngModel)]="adminForm.password"
+              name="password"
+              placeholder="Enter secure password"
+              required>
+            <small class="form-text">Minimum 8 characters recommended</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPhone" class="form-label">Phone Number</label>
+            <input 
+              id="adminPhone"
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="adminForm.phone"
+              name="phone"
+              placeholder="+1 (555) 000-0000">
+            <small class="form-text">Optional contact number</small>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success" [disabled]="isLoading">
+              <i class="fas fa-save"></i> {{ isLoading ? 'Creating...' : 'Create Admin' }}
+            </button>
+            <button type="button" class="btn btn-outline-secondary" (click)="resetAdminForm()">
+              <i class="fas fa-redo"></i> Reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

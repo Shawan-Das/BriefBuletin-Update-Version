@@ -1,0 +1,140 @@
+<div class="news-portal-container">
+  <!-- Professional Header -->
+  <header class="news-header">
+    <div class="container-fluid">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+          <div class="logo-text">
+            <h1 class="site-title">BriefBulletin</h1>
+            <p class="site-tagline">Your Trusted News Source</p>
+            <p *ngIf="isAdmin" class="site-tagline">Hello {{userName}}</p>
+          </div>
+        </div>
+        
+        <!-- Language Selector -->
+        <div class="language-selector">
+          <button 
+            class="lang-btn" 
+            [class.active]="selectedLanguage === 'en'"
+            (click)="switchLanguage('en')"
+            [disabled]="isLoading">
+            <i class="fas fa-globe"></i>
+            <span>English</span>
+          </button>
+          <button 
+            class="lang-btn" 
+            [class.active]="selectedLanguage === 'bn'"
+            (click)="switchLanguage('bn')"
+            [disabled]="isLoading">
+            <i class="fas fa-globe"></i>
+            <span>বাংলা</span>
+          </button>
+          <button *ngIf="isAdmin" 
+            class="lang-btn"
+            routerLink="/admin">
+            <i class="fas fa-globe"></i>
+            <span>Admin Panel</span>
+          </button>
+        </div>
+        
+        <div class="header-actions">
+          <button class="logout-btn" (click)="logout()" title="Logout">
+            <i class="fa fa-sign-out"></i>
+            <span class="d-none d-sm-inline">Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content container-fluid">
+
+    <!-- Articles Section -->
+    <section class="articles-section" *ngIf="articles.length > 0">
+      <div class="section-header">
+        <h2 class="section-title">Latest News</h2>
+        <div class="section-divider"></div>
+      </div>
+      
+      <div class="articles-grid">
+        <article class="news-card" *ngFor="let article of articles; let i = index" [style.animation-delay]="(i % 6) * 0.1 + 's'">
+          <div class="card-image-wrapper">
+            <img [src]="article.featured_image" [alt]="article.title" class="card-image" 
+                 (error)="onImageError($event)">
+            <div class="image-overlay"></div>
+            <div class="card-badge">
+              <i class="far fa-clock"></i>
+              <span>{{ formatDateTime(article.published_at) }}</span>
+            </div>
+          </div>
+          <div *ngIf="isAdmin" class="admin-actions">
+            <button class="draft-btn" (click)="draftArticle(article.id)" title="Move to Draft" [disabled]="isDraftingArticle">
+              <i class="fas fa-archive"></i>
+              <span class="draft-text">Draft</span>
+            </button>
+          </div>
+          
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="meta-item">
+                <i class="far fa-eye"></i>
+                {{ article.views_count }} views
+              </span>
+            </div>
+            
+            <h3 class="card-title">{{ article.title }}</h3>
+            
+            <p class="card-excerpt">{{ truncateText(article.summary, 300) }}</p>
+            
+            <button type="button" class="read-more-btn" (click)="readNews(article.id)">
+              <span>Read Full Story</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading && articles.length === 0">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+      </div>
+      <p class="loading-text">Loading latest news...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && articles.length === 0">
+      <div class="empty-icon">
+        <i class="fas fa-newspaper"></i>
+      </div>
+      <h3>No Articles Available</h3>
+      <p>Check back later for the latest news updates.</p>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-section" *ngIf="articles.length > 0">
+      <button 
+        class="load-more-button" 
+        (click)="loadMore()" 
+        [disabled]="isLoading || !hasMoreArticles">
+        <span *ngIf="!isLoading">
+          <i class="fas fa-arrow-down"></i>
+          Load More Stories
+        </span>
+        <span *ngIf="isLoading">
+          <span class="button-spinner"></span>
+          Loading...
+        </span>
+      </button>
+      <p class="load-more-message" *ngIf="!hasMoreArticles && !isLoading">
+        <i class="fas fa-check-circle"></i>
+        All stories loaded
+      </p>
+    </div>
+  </main>
+</div>

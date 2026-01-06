@@ -1,0 +1,37 @@
+{
+	"dbhost":"localhost",
+	"dbPort":5432,
+	"dbname":"db_name",
+	"dbuid":"db_admin",
+	"dbpassword":"db_password",
+	"timeout": 100,
+	"connRetryCount": 1,
+	"connRetryInterval": 5000,
+	"jwtKey":"s@3j7a91j0K1jm2*9h8bn9u789u14",
+	"bypassAuth":[
+		"/api/auth/create",
+		"/api/auth/login",
+		"/api/auth/resetpwd",
+		"/api/send-otp",
+		"/api/verify-otp",
+		"/api/verify-user"
+	],
+	"adminEmailId":"admin@user.com",
+	"adminPassword":"admin4test",
+	"adminEmpCode":"0000",
+	"rptServiceLink":"http://192.168.1.151:9985/convert",
+	"rptFilePath":"./",
+	"rptAuthKey":"cnp4test",
+	"isTLS": false,
+	"tlsKeyPath": "",
+	"tlsCertPath": "",
+	"senderEmail": "your email for sending mails",
+    "password": "your emails app password(not login password, app password)",
+	"smtp_host": "smtp.gmail.com",
+	"smtp_port": 587,
+	"url": {
+        "uiurl": "ui url"
+    },
+	"system_key": "GHghb8*%&bj&*(hbIU(!T79(*Y(*((!#)",
+	"api_key": "BriefBultin@2024"
+}

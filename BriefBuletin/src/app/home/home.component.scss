@@ -1,0 +1,955 @@
+// Professional News Portal Design
+// Typography
+$font-headline: 'Playfair Display', serif;
+$font-body: 'Inter', sans-serif;
+
+// Colors - Professional News Portal Palette
+$color-primary: #1a1a1a;
+$color-secondary: #007bff;
+$color-accent: #0066cc;
+$color-text: #2c2c2c;
+$color-text-light: #666666;
+$color-bg: #ffffff;
+$color-bg-light: #f8f9fa;
+$color-border: #e0e0e0;
+
+// News Portal Container
+.news-portal-container {
+  min-height: 100vh;
+  background: $color-bg-light;
+  font-family: $font-body;
+}
+
+// Professional Header
+.news-header {
+  background: $color-bg;
+  border-bottom: 3px solid $color-secondary;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, $color-secondary 0%, darken($color-secondary, 10%) 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .logo-text {
+      .site-title {
+        font-family: $font-headline;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $color-primary;
+        margin: 0;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+      }
+
+      .site-tagline {
+        font-size: 0.75rem;
+        color: $color-text-light;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Language Selector
+  .language-selector {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border: 2px solid $color-border;
+      background: white;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #666;
+      white-space: nowrap;
+
+      &:hover:not(:disabled) {
+        background: #f5f5f5;
+        border-color: $color-secondary;
+        color: $color-secondary;
+        transform: translateY(-2px);
+      }
+
+      &.active {
+        background: $color-secondary;
+        border-color: $color-secondary;
+        color: white;
+        font-weight: 600;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .header-actions {
+    flex-shrink: 0;
+  }
+
+  .logout-btn {
+    background: transparent;
+    border: 2px solid $color-border;
+    color: $color-text;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background: $color-secondary;
+      border-color: $color-secondary;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    }
+  }
+}
+
+// Main Content
+.main-content {
+  padding: 2rem 1rem;
+  padding-bottom: 120px;
+}
+
+// Section Header
+.section-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+
+  .section-title {
+    font-family: $font-headline;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $color-primary;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, $color-secondary, $color-accent);
+      border-radius: 2px;
+    }
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $color-border, transparent);
+    margin-top: 1.5rem;
+  }
+}
+
+// Articles Grid
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+// News Card
+.news-card {
+  background: $color-bg;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  animation: fadeInUp 0.6s ease-out backwards;
+  border: 1px solid $color-border;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+    .card-image {
+      transform: scale(1.08);
+    }
+
+    .read-more-btn {
+      background: $color-secondary;
+      transform: translateX(5px);
+
+      i {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  .card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background: $color-bg-light;
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: $color-text;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+
+    &:hover .image-overlay {
+      opacity: 1;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: $color-text-light;
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        i {
+          font-size: 0.7rem;
+        }
+      }
+    }
+
+    .card-title {
+      font-family: $font-headline;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $color-primary;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: color 0.3s ease;
+    }
+
+    .card-excerpt {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: $color-text-light;
+      margin-bottom: 1.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: $color-primary;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      i {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        background: $color-secondary;
+      }
+    }
+  }
+}
+
+// Loading State
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  min-height: 400px;
+
+  .loading-spinner {
+    margin-bottom: 2rem;
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid $color-border;
+      border-top-color: $color-secondary;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  .loading-text {
+    font-size: 1.1rem;
+    color: $color-text-light;
+    font-weight: 500;
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .empty-icon {
+    width: 100px;
+    height: 100px;
+    background: $color-bg-light;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    i {
+      font-size: 3rem;
+      color: $color-text-light;
+    }
+  }
+
+  h3 {
+    font-family: $font-headline;
+    font-size: 1.5rem;
+    color: $color-primary;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: $color-text-light;
+    font-size: 1rem;
+  }
+}
+
+// Load More Section
+.load-more-section {
+  text-align: center;
+  padding: 3rem 0;
+  margin-top: 2rem;
+
+  .load-more-button {
+    background: linear-gradient(135deg, $color-secondary 0%, darken($color-secondary, 5%) 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .button-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+  }
+
+  .load-more-message {
+    margin-top: 1rem;
+    color: $color-text-light;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Article Modal Styling
+::ng-deep .article-modal {
+  max-width: 900px !important;
+  font-family: $font-body !important;
+  
+  .swal2-html-container {
+    padding: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .article-modal-content {
+    text-align: left;
+  }
+
+  .article-modal-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-content-section {
+    order: 1;
+    flex-shrink: 0;
+  }
+
+  .comments-section {
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .swal2-title {
+    font-family: $font-headline !important;
+    font-size: 2rem !important;
+    color: $color-primary !important;
+    font-weight: 700 !important;
+  }
+}
+
+// Responsive Design - Tablet
+@media (max-width: 992px) {
+  .news-header {
+    .header-content {
+      gap: 0.75rem;
+    }
+
+    .logo-section {
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+      }
+
+      .logo-text {
+        .site-title {
+          font-size: 1.75rem;
+        }
+
+        .site-tagline {
+          font-size: 0.7rem;
+        }
+      }
+    }
+
+    .language-selector {
+      .lang-btn {
+        padding: 0.45rem 0.9rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .articles-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.75rem;
+  }
+}
+
+// Responsive Design - Mobile Landscape & Small Tablets
+@media (max-width: 768px) {
+  .news-header {
+    padding: 0.75rem 0;
+
+    .header-content {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0 0.75rem;
+    }
+
+    .logo-section {
+      gap: 0.75rem;
+      order: 1;
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+
+      .logo-text {
+        .site-title {
+          font-size: 1.5rem;
+        }
+
+        .site-tagline {
+          font-size: 0.65rem;
+        }
+      }
+    }
+
+    .language-selector {
+      order: 2;
+      margin-left: auto;
+
+      .lang-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+
+        span {
+          display: inline;
+        }
+      }
+    }
+
+    .header-actions {
+      order: 3;
+
+      .logout-btn {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .section-header .section-title {
+    font-size: 2rem;
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .news-card {
+    .card-image-wrapper {
+      height: 200px;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+
+      .card-title {
+        font-size: 1.25rem;
+      }
+
+      .card-excerpt {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .main-content {
+    padding: 1.5rem 0.75rem;
+    padding-bottom: 120px;
+  }
+
+  ::ng-deep .article-modal {
+    width: 95% !important;
+    max-width: 95% !important;
+    margin: 0.5rem !important;
+
+    .swal2-title {
+      font-size: 1.5rem !important;
+    }
+  }
+}
+
+// Responsive Design - Mobile Portrait
+@media (max-width: 576px) {
+  .news-header {
+    padding: 0.6rem 0;
+
+    .header-content {
+      padding: 0 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .logo-section {
+      gap: 0.6rem;
+
+      .logo-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+      }
+
+      .logo-text {
+        .site-title {
+          font-size: 1.25rem;
+        }
+
+        .site-tagline {
+          display: none;
+        }
+      }
+    }
+
+    .language-selector {
+      order: 3;
+      flex: 1 1 100%;
+      justify-content: center;
+      margin-left: 0;
+      margin-top: 0.25rem;
+
+      .lang-btn {
+        flex: 1;
+        justify-content: center;
+        max-width: 150px;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+
+        span {
+          display: inline;
+        }
+
+        i {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .header-actions {
+      order: 2;
+      margin-left: auto;
+
+      .logout-btn {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.8rem;
+
+        i {
+          margin-right: 0;
+        }
+
+        .d-none {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  .section-header .section-title {
+    font-size: 1.75rem;
+  }
+
+  .news-card {
+    .card-image-wrapper {
+      height: 180px;
+
+      .card-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+      }
+    }
+
+    .card-body {
+      padding: 1rem;
+
+      .card-title {
+        font-size: 1.1rem;
+        -webkit-line-clamp: 3;
+      }
+
+      .card-excerpt {
+        font-size: 0.85rem;
+        -webkit-line-clamp: 2;
+      }
+
+      .read-more-btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  ::ng-deep .article-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+
+    .swal2-title {
+      font-size: 1.25rem !important;
+    }
+  }
+}
+
+// Extra Small Mobile Devices
+@media (max-width: 400px) {
+  .news-header {
+    .logo-section {
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+      }
+
+      .logo-text {
+        .site-title {
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .language-selector {
+      .lang-btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.8rem;
+        gap: 0.3rem;
+
+        i {
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    .header-actions {
+      .logout-btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .section-header .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+// Legacy styles for compatibility
+body {
+  background-color: $color-bg-light;
+}
+
+h2 {
+  color: $color-primary;
+  margin-bottom: 0;
+}
+
+.home-container {
+  padding-bottom: 100px;
+  min-height: calc(100vh - 200px);
+}
+
+// Admin Actions
+.admin-actions {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  
+  .draft-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+    &:hover:not(:disabled) {
+      background: #dc3545;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    i {
+      font-size: 0.7rem;
+    }
+    
+    .draft-text {
+      white-space: nowrap;
+    }
+  }
+}
+
+// Update card-image-wrapper to ensure proper positioning
+.card-image-wrapper {
+  position: relative;
+  // ... existing styles
+  
+  .admin-actions {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover .admin-actions {
+    opacity: 1;
+  }
+}
+
+// Success notification styling
+.draft-success-notification {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .admin-actions {
+    top: 0.5rem;
+    left: 0.5rem;
+    
+    .draft-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.7rem;
+      
+      .draft-text {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-actions .draft-btn {
+    padding: 0.35rem 0.7rem;
+    
+    i {
+      margin: 0;
+    }
+  }
+}

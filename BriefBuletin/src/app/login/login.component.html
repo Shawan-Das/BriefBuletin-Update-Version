@@ -1,0 +1,322 @@
+<div class="auth-container">
+  <div class="auth-background">
+    <div class="background-pattern"></div>
+  </div>
+  
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <!-- Header -->
+      <div class="auth-header">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+          <div class="logo-text">
+            <h1 class="site-title">BriefBuletin</h1>
+            <p class="site-tagline">Your Trusted News Source</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- View Title -->
+      <div class="view-title">
+        <h2 class="view-heading" *ngIf="currentView === 'signin'">Welcome Back</h2>
+        <h2 class="view-heading" *ngIf="currentView === 'signup'">Create Account</h2>
+        <h2 class="view-heading" *ngIf="currentView === 'otp'">Verify Email</h2>
+        <h2 class="view-heading" *ngIf="currentView === 'forgot-password'">Reset Password</h2>
+        <h2 class="view-heading" *ngIf="currentView === 'reset-password'">Set New Password</h2>
+        <p class="view-subtitle" *ngIf="currentView === 'signin'">Sign in to access news feed</p>
+        <p class="view-subtitle" *ngIf="currentView === 'signup'">Join us to stay informed</p>
+        <p class="view-subtitle" *ngIf="currentView === 'otp'">Enter the code sent to your email</p>
+        <p class="view-subtitle" *ngIf="currentView === 'forgot-password'">We'll help you reset your password</p>
+        <p class="view-subtitle" *ngIf="currentView === 'reset-password'">Choose a strong password</p>
+      </div>
+
+      <!-- Sign In / Sign Up Toggle -->
+      <div class="auth-toggle" *ngIf="currentView === 'signin' || currentView === 'signup'">
+        <button type="button" 
+                class="toggle-btn" 
+                [class.active]="currentView === 'signin'"
+                (click)="switchView('signin')">
+          Sign In
+        </button>
+        <button type="button" 
+                class="toggle-btn" 
+                [class.active]="currentView === 'signup'"
+                (click)="switchView('signup')">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Sign In Form -->
+      <form (ngSubmit)="login()" autocomplete="on" class="auth-form" *ngIf="currentView === 'signin'">
+        <div class="form-group">
+          <label for="loginEmail" class="form-label">
+            <i class="fa fa-envelope"></i> User Name/Email
+          </label>
+          <input type="email" 
+                 class="form-input" 
+                 id="loginEmail" 
+                 name="loginEmail"
+                 [(ngModel)]="loginEmail" 
+                 required 
+                 placeholder="Enter your user name/email/phone number"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="loginPassword" class="form-label">
+            <i class="fa fa-lock"></i> Password
+          </label>
+          <div class="password-input-wrapper">
+            <input [type]="showPassword ? 'text' : 'password'" 
+                   class="form-input" 
+                   id="loginPassword" 
+                   name="loginPassword"
+                   [(ngModel)]="loginPassword" 
+                   required 
+                   placeholder="Enter your password" />
+            <button type="button" 
+                    class="password-toggle" 
+                    (click)="togglePasswordVisibility()" 
+                    tabindex="-1">
+              <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="form-footer d-flex justify-content-between">
+          <!-- Login as Guest -->
+          <button type="button" class="forgot-link" (click)="loginAsGuest()">
+            Login as Guest
+          </button>
+
+          <!-- Forgot Password -->
+          <button type="button" class="forgot-link" (click)="currentView = 'forgot-password'">
+            Forgot Password?
+          </button>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <span>Sign In</span>
+          <i class="fa fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form (ngSubmit)="signup()" autocomplete="on" class="auth-form" *ngIf="currentView === 'signup'">
+        <div class="form-group">
+          <label for="signupEmail" class="form-label">
+            <i class="fa fa-envelope"></i> Email Address
+          </label>
+          <input type="email" 
+                 class="form-input" 
+                 id="signupEmail" 
+                 name="signupEmail"
+                 [(ngModel)]="signupEmail" 
+                 required 
+                 placeholder="Enter your email"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupUserName" class="form-label">
+            <i class="fa fa-user"></i> Username
+          </label>
+          <input type="text" 
+                 class="form-input" 
+                 id="signupUserName" 
+                 name="signupUserName"
+                 [(ngModel)]="signupUserName" 
+                 required 
+                 placeholder="Choose a username"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupPhone" class="form-label">
+            <i class="fa fa-phone"></i> Phone Number
+          </label>
+          <input type="tel" 
+                 class="form-input" 
+                 id="signupPhone" 
+                 name="signupPhone"
+                 [(ngModel)]="signupPhone" 
+                 required 
+                 placeholder="Enter your phone number"/>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupPassword" class="form-label">
+            <i class="fa fa-lock"></i> Password
+          </label>
+          <div class="password-input-wrapper">
+            <input [type]="showSignupPassword ? 'text' : 'password'" 
+                   class="form-input" 
+                   id="signupPassword" 
+                   name="signupPassword"
+                   [(ngModel)]="signupPassword" 
+                   required 
+                   placeholder="Create a password" />
+            <button type="button" 
+                    class="password-toggle" 
+                    (click)="toggleSignupPasswordVisibility()" 
+                    tabindex="-1">
+              <i [ngClass]="showSignupPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupConfirmPassword" class="form-label">
+            <i class="fa fa-lock"></i> Confirm Password
+          </label>
+          <input type="password" 
+                 class="form-input" 
+                 id="signupConfirmPassword" 
+                 name="signupConfirmPassword"
+                 [(ngModel)]="signupConfirmPassword" 
+                 required 
+                 placeholder="Confirm your password" />
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <span>Create Account</span>
+          <i class="fa fa-user-plus"></i>
+        </button>
+      </form>
+
+      <!-- OTP Verification Form -->
+      <div class="auth-form" *ngIf="currentView === 'otp'">
+        <div class="info-alert">
+          <i class="fa fa-info-circle"></i>
+          <div class="alert-content">
+            <span *ngIf="otpPurpose === 'signup'">An OTP has been sent to <strong>{{ otpEmail }}</strong>. Please verify your email to complete registration.</span>
+            <span *ngIf="otpPurpose === 'login'">An OTP has been sent to <strong>{{ otpEmail }}</strong>. Please verify your email to login.</span>
+            <span *ngIf="otpPurpose === 'forgot-password'">An OTP has been sent to <strong>{{ otpEmail }}</strong>. Please verify to reset your password.</span>
+          </div>
+        </div>
+        
+        <form (ngSubmit)="verifyOtp()" autocomplete="off">
+          <div class="form-group">
+            <label for="otp" class="form-label">
+              <i class="fa fa-key"></i> Enter 6-Digit OTP
+            </label>
+            <input type="text" 
+                   class="form-input otp-input" 
+                   id="otp" 
+                   name="otp"
+                   [(ngModel)]="otp" 
+                   required 
+                   placeholder="000000" 
+                   maxlength="6" 
+                   pattern="[0-9]{6}"
+                   (keypress)="$event.charCode >= 48 && $event.charCode <= 57"/>
+          </div>
+          
+          <div class="otp-timer">
+            <span class="timer-text" *ngIf="otpTimer > 0">
+              <i class="fa fa-clock"></i> OTP expires in: <strong class="timer-value">{{ getOtpTimerDisplay() }}</strong>
+            </span>
+            <span class="timer-expired" *ngIf="otpTimer <= 0">
+              <i class="fa fa-exclamation-triangle"></i> OTP has expired. Please resend.
+            </span>
+          </div>
+          
+          <button type="submit" class="submit-btn" [disabled]="otp.length !== 6">
+            <span>Verify OTP</span>
+            <i class="fa fa-check"></i>
+          </button>
+          
+          <button type="button" class="secondary-btn" (click)="resendOtp()" [disabled]="otpTimer > 0">
+            <i class="fa fa-redo"></i>
+            <span>Resend OTP</span>
+            <span class="timer-badge" *ngIf="otpTimer > 0">({{ getOtpTimerDisplay() }})</span>
+          </button>
+          
+          <button type="button" class="back-link" (click)="goBack()">
+            <i class="fa fa-arrow-left"></i> Back
+          </button>
+        </form>
+      </div>
+
+      <!-- Forgot Password Form -->
+      <form (ngSubmit)="forgotPassword()" autocomplete="on" class="auth-form" *ngIf="currentView === 'forgot-password'">
+        <div class="info-alert">
+          <i class="fa fa-info-circle"></i>
+          <div class="alert-content">
+            Enter your email address and we'll send you an OTP to reset your password.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="resetEmail" class="form-label">
+            <i class="fa fa-envelope"></i> Email Address
+          </label>
+          <input type="email" 
+                 class="form-input" 
+                 id="resetEmail" 
+                 name="resetEmail"
+                 [(ngModel)]="resetEmail" 
+                 required 
+                 placeholder="Enter your email"/>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <span>Send OTP</span>
+          <i class="fa fa-paper-plane"></i>
+        </button>
+        
+        <button type="button" class="back-link" (click)="goBack()">
+          <i class="fa fa-arrow-left"></i> Back to Sign In
+        </button>
+      </form>
+
+      <!-- Reset Password Form -->
+      <form (ngSubmit)="resetPassword()" autocomplete="on" class="auth-form" *ngIf="currentView === 'reset-password'">
+        <div class="success-alert">
+          <i class="fa fa-check-circle"></i>
+          <div class="alert-content">
+            Email verified! Please set your new password.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="resetNewPassword" class="form-label">
+            <i class="fa fa-lock"></i> New Password
+          </label>
+          <div class="password-input-wrapper">
+            <input [type]="showResetPassword ? 'text' : 'password'" 
+                   class="form-input" 
+                   id="resetNewPassword" 
+                   name="resetNewPassword"
+                   [(ngModel)]="resetNewPassword" 
+                   required 
+                   placeholder="Enter new password" />
+            <button type="button" 
+                    class="password-toggle" 
+                    (click)="toggleResetPasswordVisibility()" 
+                    tabindex="-1">
+              <i [ngClass]="showResetPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="resetConfirmPassword" class="form-label">
+            <i class="fa fa-lock"></i> Confirm New Password
+          </label>
+          <input type="password" 
+                 class="form-input" 
+                 id="resetConfirmPassword" 
+                 name="resetConfirmPassword"
+                 [(ngModel)]="resetConfirmPassword" 
+                 required 
+                 placeholder="Confirm new password" />
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <span>Reset Password</span>
+          <i class="fa fa-key"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

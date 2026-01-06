@@ -1,0 +1,904 @@
+// ====================================================================
+// Admin Panel Component Styles - Professional & Mobile-Responsive
+// ====================================================================
+
+:host {
+  display: block;
+}
+
+// ====================================================================
+// Color Palette
+// ====================================================================
+$primary-color: #0066cc;
+$primary-light: #e6f0ff;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$info-color: #17a2b8;
+$warning-color: #ffc107;
+$text-dark: #2c3e50;
+$text-muted: #6c757d;
+$border-color: #e0e0e0;
+$bg-light: #f8f9fa;
+
+// ====================================================================
+// Main Container
+// ====================================================================
+.admin-dashboard {
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #ffffff;
+  min-height: 100vh;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 0.75rem;
+  }
+}
+
+// Header top: title and Back button on one line
+.admin-container {
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    background: white;
+    border: 2px solid $border-color;
+    color: $text-dark;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+
+    i {
+      color: $primary-color;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background: $primary-light;
+      border-color: $primary-color;
+      color: $primary-color;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// ====================================================================
+// Admin Header (Title + Tab Navigation)
+// ====================================================================
+.admin-container {
+  background: #ffffff;
+
+  .admin-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid $primary-color;
+
+    @media (max-width: 768px) {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .admin-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0 0 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      i {
+        color: $primary-color;
+        font-size: 2.2rem;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 1.5rem;
+
+        i {
+          font-size: 1.8rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        font-size: 1.25rem;
+
+        i {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    // Tab Buttons Navigation
+    .tab-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        gap: 0.5rem;
+      }
+
+      @media (max-width: 480px) {
+        gap: 0.5rem;
+        width: 100%;
+      }
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.25rem;
+      border: 2px solid $border-color;
+      background: #ffffff;
+      color: $text-dark;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+      i {
+        font-size: 1rem;
+      }
+
+      &:hover {
+        border-color: $primary-color;
+        color: $primary-color;
+        background: $primary-light;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 102, 204, 0.15);
+      }
+
+      &.active {
+        background: $primary-color;
+        color: white;
+        border-color: $primary-color;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+
+        i {
+          animation: slideInIcon 0.3s ease;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+
+        i {
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.75rem;
+        flex: 1;
+        justify-content: center;
+
+        i {
+          font-size: 0.85rem;
+        }
+
+        span {
+          display: none;
+        }
+
+        &.active span {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+
+// ====================================================================
+// Alerts (Success/Error Messages)
+// ====================================================================
+.alert {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  animation: slideInDown 0.3s ease;
+
+  i {
+    font-size: 1.1rem;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  &.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid $success-color;
+
+    i {
+      color: $success-color;
+    }
+  }
+
+  &.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid $danger-color;
+
+    i {
+      color: $danger-color;
+    }
+  }
+
+  &.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid $info-color;
+
+    i {
+      color: $info-color;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+// ====================================================================
+// Tab Content (Main Content Area)
+// ====================================================================
+.tab-content {
+  animation: fadeIn 0.4s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// ====================================================================
+// Section Header (Used in each tab)
+// ====================================================================
+.section-header {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    i {
+      color: $primary-color;
+      font-size: 1.9rem;
+    }
+  }
+
+  .section-description {
+    font-size: 0.95rem;
+    color: $text-muted;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.4rem;
+
+      i {
+        font-size: 1.6rem;
+      }
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.2rem;
+
+      i {
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
+
+// ====================================================================
+// Content Section (Container for lists/grids)
+// ====================================================================
+.content-section {
+  background: $bg-light;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+// ====================================================================
+// Loading Spinner
+// ====================================================================
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+  }
+
+  p {
+    margin-top: 1rem;
+    color: $text-muted;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+
+    .spinner-border {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+}
+
+// ====================================================================
+// Article Grid (Approve Articles Tab)
+// ====================================================================
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.article-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .article-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #f0f0f0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      height: 160px;
+    }
+
+    @media (max-width: 480px) {
+      height: 140px;
+    }
+  }
+
+  .article-content {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 768px) {
+      padding: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.9rem;
+    }
+  }
+
+  .article-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .article-summary {
+    font-size: 0.9rem;
+    color: $text-muted;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.5;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .article-meta {
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin: 0 0 1rem 0;
+
+    i {
+      margin-right: 0.35rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .article-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+
+    @media (max-width: 480px) {
+      gap: 0.5rem;
+    }
+  }
+}
+
+// ====================================================================
+// Comments List (Active Comments Tab)
+// ====================================================================
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.9rem;
+  }
+}
+
+.comment-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border-left: 4px solid $primary-color;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .comment-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.95rem;
+    }
+  }
+
+  .comment-badge {
+    display: inline-block;
+    background: #fff3cd;
+    color: #856404;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .comment-text {
+    font-size: 0.95rem;
+    color: $text-dark;
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+    word-break: break-word;
+
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .comment-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    font-size: 0.85rem;
+    color: $text-muted;
+
+    small {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+
+      i {
+        margin-right: 0.25rem;
+        width: 1rem;
+        text-align: center;
+      }
+
+      strong {
+        color: $text-dark;
+        font-weight: 600;
+      }
+    }
+
+    @media (max-width: 480px) {
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .comment-actions {
+    display: flex;
+    gap: 0.75rem;
+
+    @media (max-width: 480px) {
+      gap: 0.5rem;
+    }
+  }
+}
+
+// ====================================================================
+// Form Section (Create Admin Tab)
+// ====================================================================
+.form-section {
+  background: $bg-light;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+.admin-form {
+  max-width: 600px;
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 768px) {
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: 1rem;
+    }
+
+    &:last-of-type {
+      margin-bottom: 2rem;
+
+      @media (max-width: 480px) {
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: $text-dark;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+
+    .required {
+      color: $danger-color;
+      font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .form-control {
+    padding: 0.75rem 1rem;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: $text-dark;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    &::placeholder {
+      color: #adb5bd;
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.7rem 0.9rem;
+      font-size: 16px; // Prevents zoom on iOS
+    }
+  }
+
+  .form-text {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: $text-muted;
+    font-weight: 400;
+
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: 0.75rem;
+    flex-direction: column;
+  }
+}
+
+// ====================================================================
+// Buttons
+// ====================================================================
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  i {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.7rem 1.25rem;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+
+    i {
+      font-size: 0.9rem;
+    }
+  }
+
+  &.btn-success {
+    background: $success-color;
+    color: white;
+
+    &:hover:not([disabled]) {
+      background: darken($success-color, 8%);
+    }
+  }
+
+  &.btn-danger {
+    background: $danger-color;
+    color: white;
+
+    &:hover:not([disabled]) {
+      background: darken($danger-color, 8%);
+    }
+  }
+
+  &.btn-outline-secondary {
+    background: white;
+    color: $text-dark;
+    border: 2px solid $border-color;
+
+    &:hover:not([disabled]) {
+      background: $bg-light;
+      border-color: $text-muted;
+    }
+  }
+}
+
+// ====================================================================
+// Animations
+// ====================================================================
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInIcon {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+// ====================================================================
+// Responsive Adjustments
+// ====================================================================
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard {
+    padding: 1rem 0.75rem;
+  }
+
+  .admin-container .admin-header .tab-buttons {
+    width: 100%;
+  }
+}
+
